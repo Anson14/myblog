@@ -1,3 +1,5 @@
 #+TITLE: Index
 
-This is the home page of tang.
+这是我用来记录我的博客的地方，里面有我的学习成果我的思考和我的心情，欢迎查看。任何问题请直接联系我 [[mailto:weitang@mail.ustc.edu.cn][email:]]
+
+This is the home page of Tang, where I used to publish my blog, my mind and my feeling. Thanks for read. Contact me via [[mailto:weitang@mail.ustc.edu.cn][email:]]
