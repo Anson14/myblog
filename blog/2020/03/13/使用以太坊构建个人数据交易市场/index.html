@@ -42,22 +42,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org33eee1f">摘要</a></li>
-<li><a href="#org62acdb4">相关背景知识</a></li>
-<li><a href="#orgd87873f">设计与实现</a>
+<li><a href="#org4ebf3d4">摘要</a></li>
+<li><a href="#org81ca49b">相关背景知识</a></li>
+<li><a href="#org48558cd">设计与实现</a>
 <ul>
-<li><a href="#org2d26ba5">数据交换协议</a></li>
-<li><a href="#org6387014">后端实现</a></li>
-<li><a href="#org3d4c5ba">交易步骤</a></li>
+<li><a href="#orge145370">数据交换协议</a></li>
+<li><a href="#org7ac986f">后端实现</a></li>
+<li><a href="#orgcf4434f">交易步骤</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org33eee1f" class="outline-2">
-<h2 id="org33eee1f">摘要</h2>
-<div class="outline-text-2" id="text-org33eee1f">
+<div id="outline-container-org4ebf3d4" class="outline-2">
+<h2 id="org4ebf3d4">摘要</h2>
+<div class="outline-text-2" id="text-org4ebf3d4">
 <p>
 这篇文章主要借鉴了 Solid<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> 的想法，将用户数据存储在用户的终端，用户可以指定能够访问数据的公司和组织(我觉得更多的是指应用) 。然后利用区块链建立了一个去中心化的针对用户数据的可靠协商系统。
 </p>
@@ -68,9 +68,9 @@
 </div>
 </div>
 
-<div id="outline-container-org62acdb4" class="outline-2">
-<h2 id="org62acdb4">相关背景知识</h2>
-<div class="outline-text-2" id="text-org62acdb4">
+<div id="outline-container-org81ca49b" class="outline-2">
+<h2 id="org81ca49b">相关背景知识</h2>
+<div class="outline-text-2" id="text-org81ca49b">
 <p>
 文中多次提到 off-blockchain storage，指的是链下存储，其对应的就是链上存储。区块链作为一个“分布式账本”，链上主要存储的是简单的交易信息，不适合存储大量数据，对于有大量存储需求的数据，可以采取链下存储的方式。IBM Storge 的文档 Why new off-chain storage is required for blockchains 给出的定义为：
 </p>
@@ -89,13 +89,13 @@
 </div>
 </div>
 
-<div id="outline-container-orgd87873f" class="outline-2">
-<h2 id="orgd87873f">设计与实现</h2>
-<div class="outline-text-2" id="text-orgd87873f">
+<div id="outline-container-org48558cd" class="outline-2">
+<h2 id="org48558cd">设计与实现</h2>
+<div class="outline-text-2" id="text-org48558cd">
 </div>
-<div id="outline-container-org2d26ba5" class="outline-3">
-<h3 id="org2d26ba5">数据交换协议</h3>
-<div class="outline-text-3" id="text-org2d26ba5">
+<div id="outline-container-orge145370" class="outline-3">
+<h3 id="orge145370">数据交换协议</h3>
+<div class="outline-text-3" id="text-orge145370">
 <p>
 数据传输协议图示<img src="/assets/blog/2020/03/13/使用以太坊构建个人数据交易市场/15836688847471.jpg" alt="15836688847471.jpg" />
 </p>
@@ -110,9 +110,9 @@
 </div>
 </div>
 
-<div id="outline-container-org6387014" class="outline-3">
-<h3 id="org6387014">后端实现</h3>
-<div class="outline-text-3" id="text-org6387014">
+<div id="outline-container-org7ac986f" class="outline-3">
+<h3 id="org7ac986f">后端实现</h3>
+<div class="outline-text-3" id="text-org7ac986f">
 <p>
 系统的后端是建立在以太坊上的三个智能合约：smart contract, address book contract, verifier contract:
 </p>
@@ -124,9 +124,9 @@ verifier contract，用来验证用于在 DEP（数据交换协议）中创建�
 </p>
 </div>
 </div>
-<div id="outline-container-org3d4c5ba" class="outline-3">
-<h3 id="org3d4c5ba">交易步骤</h3>
-<div class="outline-text-3" id="text-org3d4c5ba">
+<div id="outline-container-orgcf4434f" class="outline-3">
+<h3 id="orgcf4434f">交易步骤</h3>
+<div class="outline-text-3" id="text-orgcf4434f">
 <p>
 用户登陆客户端，选择想要手机哪些数据；数据售卖者建立一个新的区块连接，就是提供了一数据售卖 offer，可以提供哪些数据想要售卖的隐私规定和价格，这些 offer 信息可以被所有人看到；购买者看到合适的 offer，可以参与投标，投标信息包括购买人的信息、用途和存储策略；购买者 offer 在有效期间，可以接受多个投标，并最终选择一个投标；购买者确认一个投标后，投标者的信息将写入数据 offer 区块，让所有市场用户都能看到；发送信息提醒给所有参与投标用户（won/failed）；获胜投标人能够将智能合约中指定的金额转移到数据卖方。只有在全额收到金额之后，投标人才被确定为数据购买者；数据售卖者立刻获得以太币；然后根据 DEP 的规则进行数据购买，完成整个步骤。
 Social Linked Network，有互联之父 Tim Berners-Lee 牵头的新型数据存储方案，简单来说就是将数据存储在用户端，服务端需要向用户请求访问数据，并且数据可以高效复用（可以思考聊天记录迁移这样的场景）。 ↩
