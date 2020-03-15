@@ -42,21 +42,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org50f6ec1">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</a>
+<li><a href="#org0db9157">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</a>
 <ul>
-<li><a href="#org3c4baae">介绍</a></li>
+<li><a href="#org41a689d">介绍</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org50f6ec1" class="outline-2">
-<h2 id="org50f6ec1">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</h2>
-<div class="outline-text-2" id="text-org50f6ec1">
+<div id="outline-container-org0db9157" class="outline-2">
+<h2 id="org0db9157">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</h2>
+<div class="outline-text-2" id="text-org0db9157">
 </div>
-<div id="outline-container-org3c4baae" class="outline-3">
-<h3 id="org3c4baae">介绍</h3>
-<div class="outline-text-3" id="text-org3c4baae">
+<div id="outline-container-org41a689d" class="outline-3">
+<h3 id="org41a689d">介绍</h3>
+<div class="outline-text-3" id="text-org41a689d">
 <p>
 分布式优化：让一群没有服务器指挥的节点，在仅和邻居通讯（类似于 P2P）的情况下达到整体最优解。需要分布式优化的原因自然是因为 CS 架构的优化模型存在缺点，比如单点故障等原因，参考知乎<a href="https://www.zhihu.com/question/59260302">刘家耿的回答</a>，给出一个简单的形式化的表达式：
 \[
@@ -154,7 +154,7 @@ g 是函数 f 在 x 点的次梯度，当
 
 <tr>
 <td class="org-left">\(a_{ij}^k\)</td>
-<td class="org-left"><b>weight</b> of the value processor i put which sent from j</td>
+<td class="org-left"><b>weight</b> of processor i put on value sent from j</td>
 </tr>
 
 <tr>
