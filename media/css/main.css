@@ -45,31 +45,41 @@ body {
 p {
     margin: 0 0 20px;
 }
-h1, h2, h3 {
+h1 {
+    font-size:20px;
+}
+h2, h3, h4 {
+    font-size:18px;
+}
+
+h1, h2, h3, h4{
     position: relative;
     margin: 30px 0 20px;
-    font-size: 18px;
     font-weight: bold;
     line-height: 1.1;
-    color: #111;
+    color: #004080;
     text-rendering: optimizeLegibility;
 }
-h1:before, h2:before, h3:before {
+h1:before, h2:before, h3:before, h4:before {
     position: absolute;
     top: auto;
     color: #ccc;
     display: none;
 }
 h1:before {
-    content: "*";
+    content: "Title";
     left: -1.25em;
 }
 h2:before {
-    content: "**";
+    content: "#";
     left: -2em;
 }
 h3:before {
-    content: "***";
+    content: "##";
+    left: -2.5em;
+}
+h4:before {
+    content: "###";
     left: -2.5em;
 }
 i, em, b, strong {
@@ -81,7 +91,7 @@ b, strong {
     color: #333;
 }
 b:before, b:after, strong:before, strong:after {
-    content: "*";
+    content: "";
 }
 i:before, i:after, em:before, em:after {
     content: "/";
