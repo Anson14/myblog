@@ -1,55 +1,51 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>InfoCom 2019 学习记录 - Layer 7</title>
-  <meta charset="utf-8" />
-  <meta name="author" content="Layer 3" />
-  <meta name="description" content="The study note for infocomm 2019" />
-  <meta name="keywords" content="Infocomm, Study, Network" />
-
-  <link rel="alternate" title="RSS Feed" href="/rss.xml" type="application/rss+xml">
-
-  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
-  <link rel="stylesheet" href="/media/css/prettify.css" type="text/css">
+    <title>InfoCom 2019 学习记录 - Layer 7</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Layer 3" />
+        <meta name="description" content="The study note for infocomm 2019" />
+        <meta name="keywords" content="Infocomm, Study, Network" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <style type="text/css"></style>
 </head>
 
   <body class="container">
-<header id="header">
-  <h1 class="title"><a href="/">Layer 7</a></h1>
-  <ul>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/media/">Media</a></li>
-    <li><a href="/tags/">Tags</a></li>
-    <li><a href="/tags/">Tags</a></li>
-    <li><a href="/about/">About</a></li>
-  </ul>
-  <form method="get" id="search" action="https://duckduckgo.com">
-    <input type="text" class="field" name="q" id="s" placeholder="Search">
-    <input type="hidden" name="as_sitesearch" value="ansont.cn">
-  </form>
-</header>
+    <nav class="main-nav">
+        <a href="/blog">Archive</a>
+        <a href="/tags">Tag</a>
+        <a href="/about/">About</a>
+        <a class="cta" href="https://github.com/Anson14">GitHub</a>
+    </nav>
 
-<section id="content" role="main">
-  <h1>InfoCom 2019 学习记录</h1>
-  <div id="table-of-contents">
+<div>
+    <section id="wrapper">
+        <article class="post">
+            <header>
+                    <h1>InfoCom 2019 学习记录</h1>
+            </header>
+            <br />
+            <section id="post-body">
+                <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgee8f7cb">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</a>
+<li><a href="#orgf1ede22">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</a>
 <ul>
-<li><a href="#org03edd1b">介绍</a></li>
+<li><a href="#orge6bd1c7">介绍</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgee8f7cb" class="outline-2">
-<h2 id="orgee8f7cb">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</h2>
-<div class="outline-text-2" id="text-orgee8f7cb">
+<div id="outline-container-orgf1ede22" class="outline-2">
+<h2 id="orgf1ede22">A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in Processing Networks</h2>
+<div class="outline-text-2" id="text-orgf1ede22">
 </div>
-<div id="outline-container-org03edd1b" class="outline-3">
-<h3 id="org03edd1b">介绍</h3>
-<div class="outline-text-3" id="text-org03edd1b">
+<div id="outline-container-orge6bd1c7" class="outline-3">
+<h3 id="orge6bd1c7">介绍</h3>
+<div class="outline-text-3" id="text-orge6bd1c7">
 <p>
 分布式优化：让一群没有服务器指挥的节点，在仅和邻居通讯（类似于 P2P）的情况下达到整体最优解。需要分布式优化的原因自然是因为 CS 架构的优化模型存在缺点，比如单点故障等原因，参考知乎<a href="https://www.zhihu.com/question/59260302">刘家耿的回答</a>，给出一个简单的形式化的表达式：
 \[
@@ -175,14 +171,53 @@ g 是函数 f 在 x 点的次梯度，当
 </div>
 </div>
 
-</section>
+            </section>
+    </section>
+</div>
 
-
-
-<footer id="footer">
-    Send comments, critique and suggestions to <a href="mailto:weitang &lt;at&gt; mail &lt;dot&gt; ustc &lt;dot&gt; edu &lt;dot&gt; cn">Layer 3</a>.
-    Powered by <a href="https://github.com/kelvinh/org-page">org-page</a>
-</footer>
+    <div>
+    <section id="wrapper">
+      <div class="post-meta">
+        <span title="post date" class="post-info">2020-03-15</span>
+        <span title="tags" class="post-info"><a href="/tags/study/">Study</a></span>
+      </div>
+      <br />
+      <br />
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          //var disqus_developer = 1;
+          var disqus_identifier = "/blog/2020/03/15/infocom-2019-学习记录";
+          var disqus_url = "http://ansont.cn/blog/2020/03/15/infocom-2019-学习记录";
+          var disqus_shortname = 'Layer 3';
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="/media/js/main.js"></script>
+      <div align="center">
+      <footer id="footer">
+        <p class="small">
+          Copyright &copy; 2012 - <span id="footerYear"></span> <a href="mailto:weitang &lt;at&gt; mail &lt;dot&gt; ustc &lt;dot&gt; edu &lt;dot&gt; cn">Layer 3</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/kelvinh/org-page" target="_blank">org-page</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+        <br />
+      </footer>
+      </div>
+      </section>
+    </div>
 
   </body>
 </html>
