@@ -39,7 +39,7 @@ body {
     font-family: Menlo, Monaco, monospace;
     font-size: 14px;
     line-height: 1.5;
-    color: #104;
+    color: #111;
     background-color: #fff;
 }
 p {
@@ -67,7 +67,7 @@ h1:before, h2:before, h3:before, h4:before {
     display: none;
 }
 h1:before {
-    content: "Title";
+    content: "";
     left: -1.25em;
 }
 h2:before {
