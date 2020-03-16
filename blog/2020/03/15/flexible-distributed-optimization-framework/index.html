@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>与主机上其他任务共享资源的分布式优化框架 - Layer 7</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Layer 3" />
+    <meta name="description" content="The study note for infocomm 2019" />
+    <meta name="keywords" content="Infocomm, Study, Network" />
+    <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/media/css/prettify.css" type="text/css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon-16x16.png" type="image/x-icon"
+  </head>
+
+  <body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="/">Layer 7</a></h1>
+        <p>Thanks for Layer 3</p>
+        <ul>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/media/">Media</a></li>
+          <li><a href="/tags/">Tags</a></li>
+          <!--
+          <li><a href="/tags/">Tags</a></li>
+          -->
+          <li><a href="/about/">About</a></li>
+          <li><a href="https://github.com/Anson14">GitHub</a></li>
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="//www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="ansont.cn">
+        </form>
+      </header>
+    </div>
+
+<div>
+<div class="post">
+<h1 class="title">与主机上其他任务共享资源的分布式优化框架</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgac76c0d">介绍</a>
+<ul>
+<li><a href="#org7688ba6">分布式优化</a></li>
+<li><a href="#org02beea6"><b>什么是次梯度 subgrdient</b></a></li>
+<li><a href="#org23421f9">符号规定：</a></li>
+</ul>
+</li>
+<li><a href="#orgf270349">模型与算法</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgac76c0d" class="outline-2">
+<h2 id="orgac76c0d">介绍</h2>
+<div class="outline-text-2" id="text-orgac76c0d">
+<p>
+题目名为：A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in
+Processing Networks
+</p>
+</div>
+
+<div id="outline-container-org7688ba6" class="outline-3">
+<h3 id="org7688ba6">分布式优化</h3>
+<div class="outline-text-3" id="text-org7688ba6">
+<p>
+让一群没有服务器指挥的节点，在仅和邻居通讯（类似于 P2P）的情况下达到整体最优解。需要分布式优化的原因自然是因为 CS 架构的优化模型存在缺点，比如单点故障等原因，参考知乎<a href="https://www.zhihu.com/question/59260302">刘家耿的回答</a>，给出一个简单的形式化的表达式：
+\[
+  \min_{x_i,\cdots,x_n} \sum_{i=1}^n f_i(x_i)
+\]
+</p>
+
+<p>
+上面的公示与常规的优化公示相对应，CS 架构的的优化公示中的 x 是全局统一的，存储在中心 server 上，而分布式优化的 x 则存储在每一个 client 上，这里再借用下上面的回答中的一个流程进一步的阐述分布式优化：
+</p>
+<div class="org-src-container">
+<pre class="src src-english">for each node i, simultaneously
+*repeat*
+    do gradient updates with own data;
+    regularly exchange some information with neighbors;
+    combine information according to some policy;
+*until* reach consensus and optimaticaly
+</pre>
+</div>
+
+<p>
+文章里描述的是，可以为机器学习和信号处理提供使用内部网络连接的处理通过间歇性通信来完成全局最优目标的方法。目前的很多分布式化算法假设所有的处理器都存储了相关数据，但实际上是很多全局最优任务是运行在共享资源的主机上的，所以需要提出一种能够灵活的和其他任务共享<b>资源</b>的分布式优化算法。
+</p>
+
+<p>
+Here is a summary of classic and novel <b>Distributed Optimization</b> 
+</p>
+<blockquote>
+<p>
+One of the pioneering works on distributed optimization was Tsitsiklis et al.’s
+work [22]. Since then, several types of methods have been proposed in this area,
+such as distributed subgradient descent (DSD) [8], [14], distributed dual
+averaging [4], [21], Alternating Direction Method of Multipliers (ADMM) [9],
+[18], Nesterov’s method [15], [17] and second-order algorithm [10], [23], with
+different performances and restrictions. Among these types, DSD is the most
+important algorithm because it is easily implemented in a distributed way (ADMM
+needs sequential variable updates and second order methods need costly
+distributed Hessian calculation), and the basis of many further developed
+algorithms. For example, by adding history gradient information to DSD, the
+methods in [13] and [16] can achieve a linear convergence rate for the sum of
+strongly convex and smooth functions with a constant stepsize. Nesterov’s method
+can also be considered as a variant of the gradient method. So in this paper, we
+will focus on gradient-based algorithms.
+</p>
+</blockquote>
+
+<p>
+文章提出一套灵活的分布式次梯度(subgradient)算法，允许处理器通过基于概率地在多个正在进行的任务之间切换，从而同时处理多个正在进行的任务。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org02beea6" class="outline-3">
+<h3 id="org02beea6"><b>什么是次梯度 subgrdient</b></h3>
+<div class="outline-text-3" id="text-org02beea6">
+<blockquote>
+<p>
+当函数不可导时，无法通过常规的方法求梯度，也就无法使用梯度下降发来进行实现优化算法，因此针对存在不可导（不光滑）的函数提出其次梯度的概念，其标准定义为：
+</p>
+
+<p>
+g 是函数 f 在 x 点的次梯度，当
+\[
+    f(y) \geq f(x) + g^T(y-x), \forall y
+\]
+</p>
+
+<p>
+上面的 g 是一个可能的次梯度，函数在某一点的次梯度是一个集合被记为&part; f(x)，对于一个凸函数而言，其 &part; f(x) 非空。所以可以使用类似于经典梯度下降的方法使用次梯度对不可导函数进行优化。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org23421f9" class="outline-3">
+<h3 id="org23421f9">符号规定：</h3>
+<div class="outline-text-3" id="text-org23421f9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">符号</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(n\)</td>
+<td class="org-left"><b>number</b> of processors</td>
+</tr>
+
+<tr>
+<td class="org-left">\(x_i^k, y_i^k\)</td>
+<td class="org-left"><b>value</b> of Processor i in iteration k</td>
+</tr>
+
+<tr>
+<td class="org-left">\(a_{ij}^k\)</td>
+<td class="org-left"><b>weight</b> of processor i put on value sent from j</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\partial f(x)\)</td>
+<td class="org-left"><b>set</b> of <b>subgradient</b> of function at x</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\nabla f(x)\)</td>
+<td class="org-left"><b>gradient</b> of f at x</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\Vert \cdot \Vert_p\)</td>
+<td class="org-left">\(l_p - norm\) for vectors</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\pi \{x\}\)</td>
+<td class="org-left">\(\pi \{x\} = \arg \min \limits_{y \in x} \Vert y-x \Vert_2^2\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf270349" class="outline-2">
+<h2 id="orgf270349">模型与算法</h2>
+<div class="outline-text-2" id="text-orgf270349">
+<p>
+考虑优化的问题与上面提到的分布式优化问题相似，这里再抄写一遍：
+\[
+\min_\limits{m \in x} f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x)
+\]
+</p>
+</div>
+</div>
+
+</div>
+</div>
+
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2020-03-15</span>
+        <span title="last modification date" class="post-info">2020-03-16</span>
+        <span title="tags" class="post-info"><a href="/tags/study/">Study</a>, <a href="/tags/infocom2019/">infocom2019</a></span>
+        <span title="author" class="post-info">Layer 3</span>
+      </div>
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          //var disqus_developer = 1;
+          var disqus_identifier = "/blog/2020/03/15/flexible-distributed-optimization-framework";
+          var disqus_url = "http://ansont.cn/blog/2020/03/15/flexible-distributed-optimization-framework";
+          var disqus_shortname = 'Layer 3';
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="//disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+       <div id="hashover"></div>
+       <script type="text/javascript" src="/hashover.php"></script>
+       <noscript>You must have JavaScript enabled to use the comments.</noscript>
+      </section>
+      <script src="//code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="/media/js/main.js"></script>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.x (<a href="http://orgmode.org">Org mode</a> 9.x)</p>
+        <p>
+          Copyright &copy; 2012 - <span id="footerYear"></span> <a href="mailto:weitang &lt;at&gt; mail &lt;dot&gt; ustc &lt;dot&gt; edu &lt;dot&gt; cn">Layer 3</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/kelvinh/org-page" target="_blank">org-page</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
