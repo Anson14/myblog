@@ -19,7 +19,6 @@
         <p>Thanks for Layer 3</p>
         <ul>
           <li><a href="/blog/">Blog</a></li>
-          <li><a href="/media/">Media</a></li>
           <li><a href="/tags/">Tags</a></li>
           <!--
           <li><a href="/tags/">Tags</a></li>
@@ -42,30 +41,30 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgac76c0d">介绍</a>
+<li><a href="#org99860d5">介绍</a>
 <ul>
-<li><a href="#org7688ba6">分布式优化</a></li>
-<li><a href="#org02beea6"><b>什么是次梯度 subgrdient</b></a></li>
-<li><a href="#org23421f9">符号规定：</a></li>
+<li><a href="#org129402e">分布式优化</a></li>
+<li><a href="#org1a594c5"><b>什么是次梯度 subgrdient</b></a></li>
+<li><a href="#orgb5dea98">符号规定：</a></li>
 </ul>
 </li>
-<li><a href="#orgf270349">模型与算法</a></li>
+<li><a href="#org953e3b5">模型与算法</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgac76c0d" class="outline-2">
-<h2 id="orgac76c0d">介绍</h2>
-<div class="outline-text-2" id="text-orgac76c0d">
+<div id="outline-container-org99860d5" class="outline-2">
+<h2 id="org99860d5">介绍</h2>
+<div class="outline-text-2" id="text-org99860d5">
 <p>
 题目名为：A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in
 Processing Networks
 </p>
 </div>
 
-<div id="outline-container-org7688ba6" class="outline-3">
-<h3 id="org7688ba6">分布式优化</h3>
-<div class="outline-text-3" id="text-org7688ba6">
+<div id="outline-container-org129402e" class="outline-3">
+<h3 id="org129402e">分布式优化</h3>
+<div class="outline-text-3" id="text-org129402e">
 <p>
 让一群没有服务器指挥的节点，在仅和邻居通讯（类似于 P2P）的情况下达到整体最优解。需要分布式优化的原因自然是因为 CS 架构的优化模型存在缺点，比如单点故障等原因，参考知乎<a href="https://www.zhihu.com/question/59260302">刘家耿的回答</a>，给出一个简单的形式化的表达式：
 \[
@@ -118,9 +117,9 @@ will focus on gradient-based algorithms.
 </div>
 </div>
 
-<div id="outline-container-org02beea6" class="outline-3">
-<h3 id="org02beea6"><b>什么是次梯度 subgrdient</b></h3>
-<div class="outline-text-3" id="text-org02beea6">
+<div id="outline-container-org1a594c5" class="outline-3">
+<h3 id="org1a594c5"><b>什么是次梯度 subgrdient</b></h3>
+<div class="outline-text-3" id="text-org1a594c5">
 <blockquote>
 <p>
 当函数不可导时，无法通过常规的方法求梯度，也就无法使用梯度下降发来进行实现优化算法，因此针对存在不可导（不光滑）的函数提出其次梯度的概念，其标准定义为：
@@ -140,9 +139,9 @@ g 是函数 f 在 x 点的次梯度，当
 </div>
 </div>
 
-<div id="outline-container-org23421f9" class="outline-3">
-<h3 id="org23421f9">符号规定：</h3>
-<div class="outline-text-3" id="text-org23421f9">
+<div id="outline-container-orgb5dea98" class="outline-3">
+<h3 id="orgb5dea98">符号规定：</h3>
+<div class="outline-text-3" id="text-orgb5dea98">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -198,9 +197,9 @@ g 是函数 f 在 x 点的次梯度，当
 </div>
 </div>
 
-<div id="outline-container-orgf270349" class="outline-2">
-<h2 id="orgf270349">模型与算法</h2>
-<div class="outline-text-2" id="text-orgf270349">
+<div id="outline-container-org953e3b5" class="outline-2">
+<h2 id="org953e3b5">模型与算法</h2>
+<div class="outline-text-2" id="text-org953e3b5">
 <p>
 考虑优化的问题与上面提到的分布式优化问题相似，这里再抄写一遍：
 \[
