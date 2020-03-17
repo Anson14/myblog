@@ -41,52 +41,52 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3c321d4">Part I Datacnter Networks</a>
+<li><a href="#org55245bf">Part I Datacnter Networks</a>
 <ul>
-<li><a href="#org1398209">FartTree</a></li>
-<li><a href="#orgc2f073e">DCN-Portland</a>
+<li><a href="#org524aaf8">FartTree</a></li>
+<li><a href="#orgdf1377e">DCN-Portland</a>
 <ul>
-<li><a href="#org2ba6e86">Abstract</a></li>
-<li><a href="#orgea8abb2">Design</a></li>
-<li><a href="#org92264df">Implementation</a></li>
-<li><a href="#orgda10100">Tips</a></li>
+<li><a href="#orgc075b36">Abstract</a></li>
+<li><a href="#org2c0d484">Design</a></li>
+<li><a href="#org64f44ef">Implementation</a></li>
+<li><a href="#org2b34949">Tips</a></li>
 </ul>
 </li>
-<li><a href="#org469de38">Helios：混合的电光交换机 Arch for Modular Data Centers</a>
+<li><a href="#orgf6d7dd5">Helios：混合的电光交换机 Arch for Modular Data Centers</a>
 <ul>
-<li><a href="#org298dde7">介绍</a></li>
-<li><a href="#org57a2ac5">总结</a></li>
+<li><a href="#org911cc94">介绍</a></li>
+<li><a href="#org5727b48">总结</a></li>
 </ul>
 </li>
-<li><a href="#org1ac18e3">Project I</a></li>
+<li><a href="#org6f85c9e">Project I</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3c321d4" class="outline-2">
-<h2 id="org3c321d4">Part I Datacnter Networks</h2>
-<div class="outline-text-2" id="text-org3c321d4">
+<div id="outline-container-org55245bf" class="outline-2">
+<h2 id="org55245bf">Part I Datacnter Networks</h2>
+<div class="outline-text-2" id="text-org55245bf">
 </div>
-<div id="outline-container-org1398209" class="outline-3">
-<h3 id="org1398209">FartTree</h3>
+<div id="outline-container-org524aaf8" class="outline-3">
+<h3 id="org524aaf8">FartTree</h3>
 </div>
-<div id="outline-container-orgc2f073e" class="outline-3">
-<h3 id="orgc2f073e">DCN-Portland</h3>
-<div class="outline-text-3" id="text-orgc2f073e">
+<div id="outline-container-orgdf1377e" class="outline-3">
+<h3 id="orgdf1377e">DCN-Portland</h3>
+<div class="outline-text-3" id="text-orgdf1377e">
 </div>
-<div id="outline-container-org2ba6e86" class="outline-4">
-<h4 id="org2ba6e86">Abstract</h4>
+<div id="outline-container-orgc075b36" class="outline-4">
+<h4 id="orgc075b36">Abstract</h4>
 </div>
-<div id="outline-container-orgea8abb2" class="outline-4">
-<h4 id="orgea8abb2">Design</h4>
+<div id="outline-container-org2c0d484" class="outline-4">
+<h4 id="org2c0d484">Design</h4>
 </div>
-<div id="outline-container-org92264df" class="outline-4">
-<h4 id="org92264df">Implementation</h4>
+<div id="outline-container-org64f44ef" class="outline-4">
+<h4 id="org64f44ef">Implementation</h4>
 </div>
-<div id="outline-container-orgda10100" class="outline-4">
-<h4 id="orgda10100">Tips</h4>
-<div class="outline-text-4" id="text-orgda10100">
+<div id="outline-container-org2b34949" class="outline-4">
+<h4 id="org2b34949">Tips</h4>
+<div class="outline-text-4" id="text-org2b34949">
 <ul class="org-ul">
 <li>与 FartTree 的连接方式不同，由于 FartTree 的连接方式是固定的，而 Portland 是没有固定的连接哪个交换机的哪个端口的要求的，同样的对编号也没有要求。</li>
 <li>为什么要让 edge 投票选 id，因为冉 Aggre switch 来分配的会可能会冲突；</li>
@@ -97,21 +97,21 @@
 </div>
 </div>
 
-<div id="outline-container-org469de38" class="outline-3">
-<h3 id="org469de38">Helios：混合的电光交换机 Arch for Modular Data Centers</h3>
-<div class="outline-text-3" id="text-org469de38">
+<div id="outline-container-orgf6d7dd5" class="outline-3">
+<h3 id="orgf6d7dd5">Helios：混合的电光交换机 Arch for Modular Data Centers</h3>
+<div class="outline-text-3" id="text-orgf6d7dd5">
 </div>
-<div id="outline-container-org298dde7" class="outline-4">
-<h4 id="org298dde7">介绍</h4>
-<div class="outline-text-4" id="text-org298dde7">
+<div id="outline-container-org911cc94" class="outline-4">
+<h4 id="org911cc94">介绍</h4>
+<div class="outline-text-4" id="text-org911cc94">
 <p>
 什么是 Modular，指的就是数据中心的一个部分，里面是个完整的包含服务器、网络散热器等均已配置的很完善的一个模块数据中心。其实就是将数据中心模块化，将各个小的模块组织在一起就是一个大的数据中心。研究的重点就是怎么为 modular 之间实现好的通信。想法就是将带宽变成资源池，按需进行分配，节省成本。
 </p>
 </div>
 
 <ul class="org-ul">
-<li><a id="orgd990836"></a>Ciuruit Switch<br />
-<div class="outline-text-5" id="text-orgd990836">
+<li><a id="orga492c1b"></a>Ciuruit Switch<br />
+<div class="outline-text-5" id="text-orga492c1b">
 <p>
 ppt 里的 circuit switch 和 optical switch 是一个意思。
 </p>
@@ -126,8 +126,8 @@ ppt 里的 circuit switch 和 optical switch 是一个意思。
 </div>
 </li>
 
-<li><a id="org575a1a1"></a>Simulation*<br />
-<div class="outline-text-5" id="text-org575a1a1">
+<li><a id="orgde5e068"></a>Simulation*<br />
+<div class="outline-text-5" id="text-orgde5e068">
 <p>
 p：有 p 个端口连到交换机，c：有 c 个端口连接到光交换机；
 </p>
@@ -138,8 +138,8 @@ M：所有的 pods 加一起共有 M 个端口连光交换机。
 </div>
 </li>
 
-<li><a id="orgfe76fe7"></a>Prototype:<br />
-<div class="outline-text-5" id="text-orgfe76fe7">
+<li><a id="orgaa0e827"></a>Prototype:<br />
+<div class="outline-text-5" id="text-orgaa0e827">
 <p>
 把一些物理交换机利用 vlan 虚拟出来多个虚拟交换机用于 pods。一台物理交换机用作核心交换机，每个 pods 有一个端口连接到以太网交换机
 </p>
@@ -168,9 +168,9 @@ LAG:为指向某一个 pod 的物理<b>光路</b>端口指定一个为集合形�
 </ul>
 </div>
 
-<div id="outline-container-org57a2ac5" class="outline-4">
-<h4 id="org57a2ac5">总结</h4>
-<div class="outline-text-4" id="text-org57a2ac5">
+<div id="outline-container-org5727b48" class="outline-4">
+<h4 id="org5727b48">总结</h4>
+<div class="outline-text-4" id="text-org5727b48">
 <p>
 Blocking Switch:打通一条路的代价是堵塞所有其他路，光交换机就是，而包交换机不是。
 </p>
@@ -182,9 +182,9 @@ Blocking Switch:打通一条路的代价是堵塞所有其他路，光交换机�
 </div>
 </div>
 
-<div id="outline-container-org1ac18e3" class="outline-3">
-<h3 id="org1ac18e3">Project I</h3>
-<div class="outline-text-3" id="text-org1ac18e3">
+<div id="outline-container-org6f85c9e" class="outline-3">
+<h3 id="org6f85c9e">Project I</h3>
+<div class="outline-text-3" id="text-org6f85c9e">
 <ul class="org-ul">
 <li>beacon:ap往外面发送的关于自身的ssid等信息的包；</li>
 <li></li>

@@ -259,6 +259,31 @@ table th.right, table td.right {
 .post img {
     max-width: 100%;
 }
+.post li {
+    list-style: none outside none;
+}
+.post ul > li:before {
+    content: "- ";
+    margin-left: -0.25em;
+    color: #cfc;
+}
+.post ol {
+    counter-reset: o-list;
+}
+.post ol > li:before {
+    content: counter(o-list) ") ";
+    counter-increment: o-list;
+    color: #cfc;
+}
+
+/* special for li in pre */
+.post pre li {
+    list-style-type: decimal;
+}
+
+.post pre li:before {
+    display: none;
+}
 /*.post li {*/
     /*list-style: none outside none;*/
 /*}*/
