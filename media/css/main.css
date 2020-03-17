@@ -259,32 +259,32 @@ table th.right, table td.right {
 .post img {
     max-width: 100%;
 }
-.post li {
-    list-style: none outside none;
-}
-.post ul > li:before {
-    content: "- ";
-    margin-left: -1.25em;
-    color: #ccc;
-}
-.post ol {
-    counter-reset: o-list;
-}
-.post ol > li:before {
-    content: counter(o-list) ") ";
-    counter-increment: o-list;
-    margin-left: -1.85em;
-    color: #ccc;
-}
+/*.post li {*/
+    /*list-style: none outside none;*/
+/*}*/
+/*.post ul > li:before {*/
+    /*content: "- ";*/
+    /*margin-left: -1.25em;*/
+    /*color: #ccc;*/
+/*}*/
+/*.post ol {*/
+    /*counter-reset: o-list;*/
+/*}*/
+/*.post ol > li:before {*/
+    /*content: counter(o-list) ") ";*/
+    /*counter-increment: o-list;*/
+    /*margin-left: -1.85em;*/
+    /*color: #ccc;*/
+/*}*/
 
-/* special for li in pre */
-.post pre li {
-    list-style-type: decimal;
-}
+/*[> special for li in pre <]*/
+/*.post pre li {*/
+    /*list-style-type: decimal;*/
+/*}*/
 
-.post pre li:before {
-    display: none;
-}
+/*.post pre li:before {*/
+    /*display: none;*/
+/*}*/
 
 /* meta info */
 .post-info {

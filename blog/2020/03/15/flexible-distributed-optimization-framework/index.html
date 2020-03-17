@@ -41,30 +41,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgee17e41">介绍</a>
+<li><a href="#org8d78aca">介绍</a>
 <ul>
-<li><a href="#org563c178">分布式优化</a></li>
-<li><a href="#org2b994fc"><b>什么是次梯度 subgrdient</b></a></li>
-<li><a href="#orga801b61">符号规定：</a></li>
+<li><a href="#org6fc6bf0">分布式优化</a></li>
+<li><a href="#org92e24bb">什么是次梯度 <b>subgrdient</b></a></li>
+<li><a href="#orgc442247">符号规定：</a></li>
 </ul>
 </li>
-<li><a href="#org8117dd1">模型与算法</a></li>
+<li><a href="#org81a8392">模型与算法</a>
+<ul>
+<li><a href="#org2dcd96b">问题模型</a></li>
+<li><a href="#org91b3c28">算法</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgee17e41" class="outline-2">
-<h2 id="orgee17e41">介绍</h2>
-<div class="outline-text-2" id="text-orgee17e41">
+<div id="outline-container-org8d78aca" class="outline-2">
+<h2 id="org8d78aca">介绍</h2>
+<div class="outline-text-2" id="text-org8d78aca">
 <p>
 题目名为：A Flexible Distributed Optimization Framework for Service of Concurrent Tasks in
 Processing Networks
 </p>
 </div>
 
-<div id="outline-container-org563c178" class="outline-3">
-<h3 id="org563c178">分布式优化</h3>
-<div class="outline-text-3" id="text-org563c178">
+<div id="outline-container-org6fc6bf0" class="outline-3">
+<h3 id="org6fc6bf0">分布式优化</h3>
+<div class="outline-text-3" id="text-org6fc6bf0">
 <p>
 让一群没有服务器指挥的节点，在仅和邻居通讯（类似于 P2P）的情况下达到整体最优解。需要分布式优化的原因自然是因为 CS 架构的优化模型存在缺点，比如单点故障等原因，参考知乎<a href="https://www.zhihu.com/question/59260302">刘家耿的回答</a>，给出一个简单的形式化的表达式：
 \[
@@ -117,9 +122,9 @@ will focus on gradient-based algorithms.
 </div>
 </div>
 
-<div id="outline-container-org2b994fc" class="outline-3">
-<h3 id="org2b994fc"><b>什么是次梯度 subgrdient</b></h3>
-<div class="outline-text-3" id="text-org2b994fc">
+<div id="outline-container-org92e24bb" class="outline-3">
+<h3 id="org92e24bb">什么是次梯度 <b>subgrdient</b></h3>
+<div class="outline-text-3" id="text-org92e24bb">
 <blockquote>
 <p>
 当函数不可导时，无法通过常规的方法求梯度，也就无法使用梯度下降发来进行实现优化算法，因此针对存在不可导（不光滑）的函数提出其次梯度的概念，其标准定义为：
@@ -139,9 +144,9 @@ g 是函数 f 在 x 点的次梯度，当
 </div>
 </div>
 
-<div id="outline-container-orga801b61" class="outline-3">
-<h3 id="orga801b61">符号规定：</h3>
-<div class="outline-text-3" id="text-orga801b61">
+<div id="outline-container-orgc442247" class="outline-3">
+<h3 id="orgc442247">符号规定：</h3>
+<div class="outline-text-3" id="text-orgc442247">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -189,7 +194,7 @@ g 是函数 f 在 x 点的次梯度，当
 
 <tr>
 <td class="org-left">\(\pi \{x\}\)</td>
-<td class="org-left">\(\pi \{x\} = \arg \min \limits_{y \in x} \Vert y-x \Vert_2^2\)</td>
+<td class="org-left">\(\pi \{x\} = \arg \min \limits_{y \in \chi} \Vert y-x \Vert_2^2\)</td>
 </tr>
 </tbody>
 </table>
@@ -197,15 +202,64 @@ g 是函数 f 在 x 点的次梯度，当
 </div>
 </div>
 
-<div id="outline-container-org8117dd1" class="outline-2">
-<h2 id="org8117dd1">模型与算法</h2>
-<div class="outline-text-2" id="text-org8117dd1">
+<div id="outline-container-org81a8392" class="outline-2">
+<h2 id="org81a8392">模型与算法</h2>
+<div class="outline-text-2" id="text-org81a8392">
+</div>
+<div id="outline-container-org2dcd96b" class="outline-3">
+<h3 id="org2dcd96b">问题模型</h3>
+<div class="outline-text-3" id="text-org2dcd96b">
 <p>
 考虑优化的问题与上面提到的分布式优化问题相似，这里再抄写一遍：
-\[
-\min_\limits{m \in x} f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x)
-\]
 </p>
+\begin{equation}
+\min_\limits{m \in \chi} f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x)
+\end{equation}
+<p>
+其中 \(f_i(x)\) 对在 \(\chi\) 上的所以 i 都是凸的。网络是一个静态的无向图 \(G = (V,
+\xi)\) ，每个处理器 \(process_i\) 仅能访问自己本地函数 \(f_i\) 并计算起次梯度，同时
+\(Process_i\) 可以与邻居通信自己的值，邻居被记为 \(N(i)\) 。
+</p>
+
+<p>
+计算次梯度需要的花费记为 1，在 1 条链路上两个处理器的产生的通信开销记为 \(\tau\) 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org91b3c28" class="outline-3">
+<h3 id="org91b3c28">算法</h3>
+<div class="outline-text-3" id="text-org91b3c28">
+<p>
+对于一个有监督的分布式学习可以将每个处理器上的优化问题刻画为这个函数：
+\(f_i(\theta) = l (h(x_i; \theta), y_i)\) ，其中 h 是预测函数，l 是损失函数， \(x_i,
+y_i\) 是处理器 i 本地存储的数据集中的数据， &theta; 是希望全局优化的参数，下面给出三个假设：
+</p>
+<ul class="org-ul">
+<li>\(f_i(x)\) 的次梯度是有界的；字面意思；
+<ul class="org-ul">
+<li>测试</li>
+<li>测试第二遍</li>
+<li>ceui</li>
+</ul></li>
+<li>\(f_i(x)\) 是 l 光滑的，(<i>Lipschitz smooth 利普希茨连续用来描述函数的平滑程度的，强调的是函数的梯度不会太突兀 L 是光滑程度，具体来说就是 x,y 两点的梯度差&lt;= L|x-y|.</i>)</li>
+<li>\(f_i(x)\) 是 &mu; -strongly convex。</li>
+</ul>
+
+<p>
+分布式优化的目标是用做少的通信开销使得每个处理器上的 \(x_i^k\) 收敛到(1)式的最优解。这里的一个重要想法就是能否一次今更新所有处理器的一个子集上的值，该子集外的处理器做其他任务并保持子集的值不变，能否也可以达到全局优化的目标。文章介绍了一个基于概率的部分更行的次梯度算法(PUSD)的算法如下：
+</p>
+
+
+<div class="figure">
+<p><img src="/assets/blog/2020/03/15/flexible-distributed-optimization-framework/2020-03-17_21-18-10_Screen Shot 2020-03-17 at 21.18.06.png" alt="2020-03-17_21-18-10_Screen Shot 2020-03-17 at 21.18.06.png" />
+</p>
+</div>
+
+<p>
+其第 6-7 行是与其他主机交换信息的过程，第 8-13 行是根据概率选择是否计算次梯度以实现全局优化。
+</p>
+</div>
 </div>
 </div>
 
@@ -215,7 +269,7 @@ g 是函数 f 在 x 点的次梯度，当
     <div>
       <div class="post-meta">
         <span title="post date" class="post-info">2020-03-15</span>
-        <span title="last modification date" class="post-info">2020-03-16</span>
+        <span title="last modification date" class="post-info">2020-03-17</span>
         <span title="tags" class="post-info"><a href="/tags/study/">Study</a>, <a href="/tags/infocom2019/">infocom2019</a></span>
         <span title="author" class="post-info">Layer 3</span>
       </div>
